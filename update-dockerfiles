@@ -1,0 +1,94 @@
+#! /usr/bin/env ruby
+
+TRUFFLERUBY_STABLE_VERSION = "20.2.0"
+
+BASE_IMAGES = {
+  "buster" => "buildpack-deps:buster",
+  "buster/slim" => "debian:buster-slim",
+  "alpine3.12" => "alpine:3.12",
+}
+
+COMMON_PRE_INSTALL = <<~EOF
+ENV LANG C.UTF-8
+EOF
+
+BASE_IMAGE_PRE_INSTALL = {
+  "buster/slim" => <<~EOF,
+    RUN set -eux ;\\
+        apt-get update ;\\
+        apt-get install -y --no-install-recommends \\
+		ca-certificates \\
+                gcc \\
+		libssl-dev \\
+                libz-dev \\
+                make \\
+                tar \\
+                wget \\
+        ; \\
+        rm -rf /var/lib/apt/lists/*
+  EOF
+  "alpine3.12" => <<~EOF,
+    RUN set -eux ;\\
+        apk add --no-cache \\
+            bash \\
+            ca-certificates \\
+            gcc \\
+            openssl-dev \\
+            zlib-dev \\
+            make \\
+            tar \\
+            wget \\
+        ;
+  EOF
+}
+
+COMMON_POST_INSTALL = <<~EOF
+# don't create ".bundle" in all our apps
+ENV GEM_HOME /usr/local/bundle
+ENV BUNDLE_SILENCE_ROOT_WARNING=1 \\
+    BUNDLE_APP_CONFIG="$GEM_HOME"
+ENV PATH $GEM_HOME/bin:$PATH
+
+# adjust permissions of a few directories for running "gem install" as an arbitrary user
+RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
+
+CMD [ "irb" ]
+EOF
+
+INSTALL = {
+  "stable" => <<~EOF,
+    ENV TRUFFLERUBY_VERSION #{TRUFFLERUBY_STABLE_VERSION}
+
+    # see https://github.com/oracle/truffleruby/blob/master/doc/user/standalone-distribution.md
+    RUN set -eux ;\\
+        wget -q https://github.com/oracle/truffleruby/releases/download/vm-$TRUFFLERUBY_VERSION/truffleruby-$TRUFFLERUBY_VERSION-linux-amd64.tar.gz ;\\
+        tar -xzf truffleruby-$TRUFFLERUBY_VERSION-linux-amd64.tar.gz -C /usr/local --strip-components=1 ;\\
+        rm truffleruby-$TRUFFLERUBY_VERSION-linux-amd64.tar.gz ;\\
+        /usr/local/lib/truffle/post_install_hook.sh ;\\
+        ruby --version ;\\
+        gem --version ;\\
+        bundle --version 
+  EOF
+}
+
+def write_section(io, string, blank_line: true)
+  return if string.nil?
+  io.puts string
+  io.puts if blank_line
+end
+
+Dir["stable/**/*"].select { |f| File.directory?(f) }.each do |directory|
+  dockerfile_path = File.join(directory, "Dockerfile")
+  puts "writing to #{dockerfile_path} ..."
+
+  path = directory.split("/")
+  truffle_flavor, image_name = path.shift, path.join("/")
+
+  File.open(dockerfile_path, "w") do |dockerfile|
+    write_section dockerfile, "FROM #{BASE_IMAGES[image_name]}"
+    write_section dockerfile, COMMON_PRE_INSTALL
+    write_section dockerfile, BASE_IMAGE_PRE_INSTALL[image_name]
+    write_section dockerfile, INSTALL[truffle_flavor]
+    write_section dockerfile, COMMON_POST_INSTALL, blank_line: false
+  end
+end
