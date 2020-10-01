@@ -1,0 +1,22 @@
+resources:
+- name: nightly
+  type: time
+  source: { interval: 24h }
+  icon: alarm
+
+jobs:
+- name: trigger-nightly
+  public: false
+  plan:
+  - get: nightly
+    trigger: true
+  - task: post-to-dockerhub
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source: { repository: curlimages/curl }
+      run:
+        # URL config at https://hub.docker.com/repository/docker/flavorjones/truffleruby/builds/edit
+        path: curl
+        args: ["-X", "POST", "((dockerhub-post-url))"]
