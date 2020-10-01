@@ -11,8 +11,8 @@ The Dockerfiles are published at https://github.com/flavorjones/docker-truffleru
 
 There are two basic flavors right now:
 
-- Debian Buster ([`buildpack-deps:buster`](https://hub.docker.com/_/buildpack-deps)) (~1.2GB)
-- Debian Buster "Slim" ([`debian:buster-slim`](https://hub.docker.com/_/debian)) (~600MB)
+- Debian Buster ([`buildpack-deps:buster`](https://hub.docker.com/_/buildpack-deps)) (~400MB compressed)
+- Debian Buster "Slim" ([`debian:buster-slim`](https://hub.docker.com/_/debian)) (~170MB compressed)
 
 Tags:
 
