@@ -47,4 +47,6 @@ I've done my best to make this image behave like the official CRuby and JRuby co
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+The Dockerfiles and scripts in this repo are MIT. See [LICENSE](LICENSE).
+
+TruffleRuby itself is [Eclipse 2.0, GNU GPL 2, or GNU LGPL 2.1.](https://github.com/oracle/truffleruby/blob/master/LICENCE.md). See [LICENSE-DEPENDENCIES](LICENSE-DEPENDENCIES).
