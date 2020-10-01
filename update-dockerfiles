@@ -53,7 +53,18 @@ INSTALL = {
         /usr/local/lib/truffle/post_install_hook.sh ;\\
         ruby --version ;\\
         gem --version ;\\
-        bundle --version 
+        bundle --version
+  EOF
+  "nightly" => <<~EOF,
+    # see https://github.com/oracle/truffleruby/blob/master/doc/user/standalone-distribution.md
+    RUN set -eux ;\\
+        wget -q https://github.com/ruby/truffleruby-dev-builder/releases/latest/download/truffleruby-head-ubuntu-20.04.tar.gz ;\\
+        tar -xzf truffleruby-head-ubuntu-20.04.tar.gz -C /usr/local --strip-components=1 ;\\
+        rm truffleruby-head-ubuntu-20.04.tar.gz ;\\
+        /usr/local/lib/truffle/post_install_hook.sh ;\\
+        ruby --version ;\\
+        gem --version ;\\
+        bundle --version
   EOF
 }
 
@@ -63,7 +74,7 @@ def write_section(io, string, blank_line: true)
   io.puts if blank_line
 end
 
-Dir["stable/**/*"].select { |f| File.directory?(f) }.each do |directory|
+Dir["{stable,nightly}/**/*"].select { |f| File.directory?(f) }.each do |directory|
   dockerfile_path = File.join(directory, "Dockerfile")
   puts "writing to #{dockerfile_path} ..."
 
