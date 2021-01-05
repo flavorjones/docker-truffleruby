@@ -16,8 +16,8 @@ There are two basic flavors right now:
 
 Tags:
 
-- `latest`, `stable`, `20.2.0`, `20.2.0-buster`, `buster` - TruffleRuby 20.2.0 based on Buster
-- `20.2.0-buster-slim`, `buster-slim` - TruffleRuby 20.2.0 based on Buster "Slim"
+- `latest`, `stable`, `20.3.0`, `20.3.0-buster`, `buster` - TruffleRuby 20.3.0 based on Buster
+- `20.3.0-buster-slim`, `buster-slim` - TruffleRuby 20.3.0 based on Buster "Slim"
 - `nightly`, `nightly-buster` - Latest Nightly based on Buster
 - `nightly-buster-slim` - Latest Nightly based on Buster "Slim"
 

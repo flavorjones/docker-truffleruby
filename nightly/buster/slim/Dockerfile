@@ -23,7 +23,7 @@ RUN set -eux ;\
     /usr/local/lib/truffle/post_install_hook.sh ;\
     ruby --version ;\
     gem --version ;\
-    bundle --version 
+    bundle --version
 
 # don't create ".bundle" in all our apps
 ENV GEM_HOME /usr/local/bundle

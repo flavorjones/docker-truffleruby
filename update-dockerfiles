@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-TRUFFLERUBY_STABLE_VERSION = "20.2.0"
+TRUFFLERUBY_STABLE_VERSION = "20.3.0"
 
 BASE_IMAGES = {
   "buster" => "buildpack-deps:buster",

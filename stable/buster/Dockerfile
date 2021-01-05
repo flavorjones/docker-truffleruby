@@ -2,7 +2,7 @@ FROM buildpack-deps:buster
 
 ENV LANG C.UTF-8
 
-ENV TRUFFLERUBY_VERSION 20.2.0
+ENV TRUFFLERUBY_VERSION 20.3.0
 
 # see https://github.com/oracle/truffleruby/blob/master/doc/user/standalone-distribution.md
 RUN set -eux ;\
@@ -12,7 +12,7 @@ RUN set -eux ;\
     /usr/local/lib/truffle/post_install_hook.sh ;\
     ruby --version ;\
     gem --version ;\
-    bundle --version 
+    bundle --version
 
 # don't create ".bundle" in all our apps
 ENV GEM_HOME /usr/local/bundle
