@@ -15,7 +15,7 @@ RUN set -eux ;\
     ; \
     rm -rf /var/lib/apt/lists/*
 
-ENV TRUFFLERUBY_VERSION 21.0.0
+ENV TRUFFLERUBY_VERSION 21.1.0
 
 # see https://github.com/oracle/truffleruby/blob/master/doc/user/standalone-distribution.md
 RUN set -eux ;\
