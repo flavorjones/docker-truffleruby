@@ -2,7 +2,7 @@
 
 This project contains configuration for an unofficial TruffleRuby Docker/OCI image.
 
-Those images are published at https://hub.docker.com/repository/docker/flavorjones/truffleruby/general
+Those images are published at https://hub.docker.com/r/flavorjones/truffleruby
 
 The Dockerfiles are published at https://github.com/flavorjones/docker-truffleruby
 
