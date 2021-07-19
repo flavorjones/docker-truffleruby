@@ -1,3 +1,0 @@
-#! /usr/bin/env bash
-
-fly -t flavorjones set-pipeline -p docker-truffleruby -c ci/pipeline.yml -l ci/private.yml
