@@ -17,6 +17,5 @@ jobs:
         with:
           file: stable/buster/Dockerfile
           push: true
-          tags:
-            - ghcr.io/flavorjones/docker-truffleruby:nightly
+          tags: ghcr.io/flavorjones/docker-truffleruby:nightly
       - run: echo ${{ steps.docker_build.outputs.digest }}
