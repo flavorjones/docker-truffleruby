@@ -5,7 +5,7 @@ concurrency:
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: ["master"]
 
 jobs:
   nightly:
@@ -15,7 +15,7 @@ jobs:
       - uses: docker/build-push-action@v2
         id: docker_build
         with:
-          file: stable/buster/Dockerfile
-          push: true
+          file: nightly/buster/Dockerfile
           tags: ghcr.io/flavorjones/docker-truffleruby:nightly
+          push: true
       - run: echo ${{ steps.docker_build.outputs.digest }}
