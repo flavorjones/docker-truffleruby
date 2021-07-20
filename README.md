@@ -1,3 +1,13 @@
+# This Project Has Been Archived!
+
+And the dockerfiles have been moved to https://github.com/flavorjones/truffleruby/tree/master/tool/dockerfiles
+
+PR to upstream TruffleRuby has been submitted at https://github.com/oracle/truffleruby/pull/2405
+
+Please visit [ghcr.io/flavorjones/truffleruby](https://ghcr.io/flavorjones/truffleruby) for the latest unofficial truffleruby images.
+
+---
+
 # [flavorjones/docker-truffleruby](https://github.com/flavorjones/docker-truffleruby)
 
 This project contains configuration for an unofficial TruffleRuby Docker/OCI image.
